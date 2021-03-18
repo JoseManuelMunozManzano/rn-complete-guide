@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
-import { v4 as uuidv4 } from 'uuid';
 
-export const GoalInput = ({ setCourseGoals }) => {
+export const GoalInput = ({ onAddGoal }) => {
   const [enteredGoal, setEnteredGoal] = useState('');
 
   const goalInputHandler = enteredText => {
     setEnteredGoal(enteredText);
-  };
-
-  const addGoalHandler = () => {
-    setCourseGoals(currentGoals => [
-      ...currentGoals,
-      { uid: uuidv4(), value: enteredGoal },
-    ]);
   };
 
   return (
@@ -24,7 +16,12 @@ export const GoalInput = ({ setCourseGoals }) => {
         onChangeText={goalInputHandler}
         value={enteredGoal}
       />
-      <Button title="ADD" onPress={addGoalHandler} />
+      <Button
+        title="ADD"
+        onPress={() => {
+          onAddGoal(enteredGoal);
+        }}
+      />
     </View>
   );
 };
