@@ -12,7 +12,12 @@ export default function App() {
       <GoalInput setCourseGoals={setCourseGoals} />
       <FlatList
         data={courseGoals}
-        renderItem={itemData => <GoalItem itemData={itemData} />}
+        renderItem={itemData => (
+          <GoalItem
+            onDelete={() => console.log('Does that work?')}
+            itemData={itemData}
+          />
+        )}
         keyExtractor={item => item.uid}
       ></FlatList>
     </View>
