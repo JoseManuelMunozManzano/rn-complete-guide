@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState('');
@@ -10,7 +11,10 @@ export default function App() {
   };
 
   const addGoalHandler = () => {
-    setCourseGoals(currentGoals => [...currentGoals, enteredGoal]);
+    setCourseGoals(currentGoals => [
+      ...currentGoals,
+      { enteredGoal, id: uuidv4() },
+    ]);
   };
 
   return (
@@ -26,7 +30,9 @@ export default function App() {
       </View>
       <View>
         {courseGoals.map(goal => (
-          <Text key={goal}>{goal}</Text>
+          <View key={goal.id} style={styles.listItem}>
+            <Text>{goal.enteredGoal}</Text>
+          </View>
         ))}
       </View>
     </View>
@@ -50,5 +56,12 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     padding: 10,
+  },
+  listItem: {
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1,
   },
 });
