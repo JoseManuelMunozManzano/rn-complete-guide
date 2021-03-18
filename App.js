@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView,
+  FlatList,
 } from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,7 +20,7 @@ export default function App() {
   const addGoalHandler = () => {
     setCourseGoals(currentGoals => [
       ...currentGoals,
-      { enteredGoal, id: uuidv4() },
+      { uid: uuidv4(), value: enteredGoal },
     ]);
   };
 
@@ -35,13 +35,16 @@ export default function App() {
         />
         <Button title="ADD" onPress={addGoalHandler} />
       </View>
-      <ScrollView>
-        {courseGoals.map(goal => (
-          <View key={goal.id} style={styles.listItem}>
-            <Text>{goal.enteredGoal}</Text>
+      <FlatList
+        data={courseGoals}
+        renderItem={itemData => (
+          <View style={styles.listItem}>
+            <Text>{itemData.item.value}</Text>
           </View>
-        ))}
-      </ScrollView>
+        )}
+        keyExtractor={item => item.uid}
+        extraData={enteredGoal}
+      ></FlatList>
     </View>
   );
 }
