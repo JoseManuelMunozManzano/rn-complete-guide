@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+} from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
@@ -28,13 +35,13 @@ export default function App() {
         />
         <Button title="ADD" onPress={addGoalHandler} />
       </View>
-      <View>
+      <ScrollView>
         {courseGoals.map(goal => (
           <View key={goal.id} style={styles.listItem}>
             <Text>{goal.enteredGoal}</Text>
           </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
