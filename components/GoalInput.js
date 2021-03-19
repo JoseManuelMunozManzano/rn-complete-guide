@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet, Modal } from 'react-native';
 
-export const GoalInput = ({ visible, onAddGoal }) => {
+export const GoalInput = ({ visible, onAddGoal, onCancelGoal }) => {
   const [enteredGoal, setEnteredGoal] = useState('');
 
   const goalInputHandler = enteredText => {
     setEnteredGoal(enteredText);
+  };
+
+  const addGoalHandler = () => {
+    onAddGoal(enteredGoal);
+    setEnteredGoal('');
+  };
+
+  const cancelGoalHandler = () => {
+    onCancelGoal();
+    setEnteredGoal('');
   };
 
   return (
@@ -17,12 +27,14 @@ export const GoalInput = ({ visible, onAddGoal }) => {
           onChangeText={goalInputHandler}
           value={enteredGoal}
         />
-        <Button
-          title="ADD"
-          onPress={() => {
-            onAddGoal(enteredGoal);
-          }}
-        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="ADD" onPress={addGoalHandler} />
+          </View>
+          <View style={styles.button}>
+            <Button color="red" title="CANCEL" onPress={cancelGoalHandler} />
+          </View>
+        </View>
       </View>
     </Modal>
   );
@@ -40,5 +52,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    width: '60%',
+    justifyContent: 'space-between',
+  },
+  button: {
+    width: '40%',
+    borderRadius: 20,
+    overflow: 'hidden',
   },
 });
